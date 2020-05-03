@@ -38,7 +38,7 @@ app.use('',(req,res,next)=>{
     res.sendFile(path.join(__dirname,'index.html'))
 })
 
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect(process.env.MONGO_URL || $MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 },(err)=>{
