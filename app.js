@@ -9,6 +9,11 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const fileController = require('./controller/fileUploadController')
 
+// setting enviroment variables
+if(!process.env.PORT){
+    require('dotenv').config();
+}
+
 var multer  = require('multer')
 
 var upload = multer({ dest: 'uploads/' })
@@ -38,7 +43,7 @@ app.use('',(req,res,next)=>{
     res.sendFile(path.join(__dirname,'index.html'))
 })
 
-mongoose.connect(process.env.MONGO_URL || $MONGO_URL, {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 },(err)=>{
@@ -48,6 +53,4 @@ mongoose.connect(process.env.MONGO_URL || $MONGO_URL, {
         console.log(err)
     }
 });
-
-// app.listen(process.env.PORT || 8080,()=>console.log(`server running at port ${process.env.PORT}`))
 
