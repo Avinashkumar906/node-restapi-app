@@ -4,7 +4,7 @@ const User = require('../controller/userController')
 
 const router = express.Router();
 
-router.get('/getuserdata', Auth.verifyToken, User.getUserData)
+router.get('/getuserdata', User.getUserData)
 router.post('/userlogin', Auth.postUserLogin)
 
 router.post('/postsignup', Auth.signUp)

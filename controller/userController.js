@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 
 exports.getUserData = async (req, res, next) => {
     try {
-        var mail = req.user ? req.user.email : process.env.DEFAULT_EMAIL
+        var mail = process.env.DEFAULT_EMAIL
         var user = await User.findOne({ email: mail})
         res.status(201).json(user)
     } catch (error) {

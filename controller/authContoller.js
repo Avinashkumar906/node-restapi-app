@@ -44,6 +44,7 @@ exports.verifyToken = (req,res,next)=>{
     var token;
     if(req.headers.authorization){
         token =  req.headers.authorization.split(' ')[1] 
+        console.log('This is token: ' + token)
         jwt.verify(token,process.env.JWT_SECRET,(err,result)=>{
             if(!err) {
                 req.user = result;
@@ -53,7 +54,7 @@ exports.verifyToken = (req,res,next)=>{
             }
         }) 
     } else {
-        next();
+        res.status(401).json({message:"Unauthorised user"}); 
     }
     
 }
