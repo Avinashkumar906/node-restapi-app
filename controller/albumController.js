@@ -40,19 +40,12 @@ exports.deleteImage = async (req,res,next)=>{
     } 
 }
 
-exports.deleteAlbum = async (req,res)=>{
+exports.deleteAlbum = async (req,res,next)=>{
     try {
-        let id = req.params.id;
-        let image = await Image.findById(id)
-        let filename = image.alt;
-        cloudinary.uploader.destroy(filename,(error,result)=>{
-                if(error){
-                    res.send(error)
-                } else {
-                    image.remove(()=>res.status(201).json({message:'image deleted.!'}))
-                }
-            }
-        );
+        console.log("Album to delete Id:" + req.params.id)
+        let image = await Image.findByIdAndDelete(req.params.id)
+        req.album = image
+        next() 
     } catch (error) {
         res.status(500).json(error);
     } 
