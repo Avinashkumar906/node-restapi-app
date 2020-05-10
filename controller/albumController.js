@@ -1,14 +1,9 @@
 const Image = require('../model/image')
-const cloudinary = require('cloudinary').v2;
-
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-    api_key: process.env.CLOUDINARY_KEY, 
-    api_secret: process.env.CLOUDINARY_API_SECRET
-});
+const log = require('log-to-file')
 
 exports.getImage = async (req,res)=>{
     try {
+        
         let images = await Image.find({image:true})
         res.status(201).json(images);
     } catch (error) {
@@ -32,6 +27,7 @@ exports.postImage = (req,res)=>{
 
 exports.deleteImage = async (req,res,next)=>{
     try {
+        log("Image to delete Id:" + req.params.id +'<br/>')
         let image = await Image.findByIdAndDelete(req.params.id)
         req.filename = image.alt
         next();
@@ -42,7 +38,7 @@ exports.deleteImage = async (req,res,next)=>{
 
 exports.deleteAlbum = async (req,res,next)=>{
     try {
-        console.log("Album to delete Id:" + req.params.id)
+        log("Album to delete Id:" + req.params.id+'<br/>')
         let image = await Image.findByIdAndDelete(req.params.id)
         req.album = image
         next() 

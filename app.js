@@ -8,9 +8,11 @@ const albumRouter = require('./routes/album')
 const bodyParser = require('body-parser')
 const path = require('path')
 const fileController = require('./controller/fileUploadController')
+const log = require('log-to-file')
 
 // setting enviroment variables
 if(!process.env.PORT){
+    log('This is Development enviroment!<br/>')
     require('dotenv').config();
 }
 
@@ -40,7 +42,7 @@ app.use('/uploadimage', upload.single('file'), fileController.fileUploader)
 
 app.use('',(req,res,next)=>{
     res.setHeader('Content-Type', 'text/html')
-    res.sendFile(path.join(__dirname,'index.html'))
+    res.sendFile(path.join(__dirname,'default.log'))
 })
 
 mongoose.connect(process.env.MONGO_URL, {
@@ -48,9 +50,9 @@ mongoose.connect(process.env.MONGO_URL, {
   useUnifiedTopology: true
 },(err)=>{
     if(!err){
-        app.listen(process.env.PORT || 8080,()=>console.log(`server running at port ${process.env.PORT}`))
+        app.listen(process.env.PORT || 8080,()=>log(`Server running at port ${process.env.PORT}<br/>`))
     } else {
-        console.log(err)
+        log(err +'<br/>')
     }
 });
 

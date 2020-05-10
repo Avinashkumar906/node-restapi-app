@@ -1,4 +1,5 @@
 const cloudinary = require('cloudinary').v2;
+const log = require('log-to-file')
 
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
@@ -7,13 +8,12 @@ cloudinary.config({
   });
 
 function deleteFile(filename){
-    // cloudinary.uploader.destroy(filename,(error,result)=>{
-    //         error ? console.log(error) : console.log('Deleted File: ' +filename)
-    //     } 
-    // );
+    cloudinary.uploader.destroy(filename,(error,result)=>{
+            error ? log(error+ '<br>') : log('Deleted File: ' +filename +'<br>')
+        } 
+    );
 }  
   
-
 exports.fileUploader=(req,res,next)=>{
     let tempfile = req.file.destination + req.file.filename;
     cloudinary.uploader.upload(tempfile, (error, result)=>{

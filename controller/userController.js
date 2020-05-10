@@ -1,8 +1,10 @@
 const User = require('../model/user')
 const bcrypt = require('bcryptjs')
+const log = require('log-to-file')
 
 exports.getUserData = async (req, res, next) => {
     try {
+        
         var mail = process.env.DEFAULT_EMAIL
         var user = await User.findOne({ email: mail})
         res.status(201).json(user)
