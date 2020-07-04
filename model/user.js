@@ -59,7 +59,13 @@ const userSchema = new Schema({
             description:String,
             link:String,
             youtube:String,
-            group:[String]
+            git:String,
+            group:[String],
+            technology:[String],
+            liked:Number,
+            day:{ type: Number , default: new Date().getDate()},
+            month:{ type: String , default: new Date().toLocaleString('default', { month: 'long' })},
+            year:{ type: Number , default: new Date().getFullYear()}
         }],
     },
     contact:{
