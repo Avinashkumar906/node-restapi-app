@@ -28,9 +28,9 @@ exports.fileUploaderv2=(req,res,next)=>{
     cloudinary.uploader.upload(tempfile.tempFilePath, (error, result)=>{
         error ? res.send(error) : res.status(201).send(result)
         }
-    );
-    res.status(201).send(tempfile)    
+    );  
 }
+
 exports.fileDestroy = (req,res,next)=>{
     var filename = req.filename;
     deleteFile(filename);
