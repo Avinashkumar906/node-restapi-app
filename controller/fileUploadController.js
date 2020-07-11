@@ -21,6 +21,16 @@ exports.fileUploader=(req,res,next)=>{
         }
     );
 }
+
+exports.fileUploaderv2=(req,res,next)=>{
+    let tempfile = req.files.file;
+    log(`fileuploaderv2: ${JSON.stringify(tempfile)} <br/>`)
+    cloudinary.uploader.upload(tempfile.tempFilePath, (error, result)=>{
+        error ? res.send(error) : res.status(201).send(result)
+        }
+    );
+    res.status(201).send(tempfile)    
+}
 exports.fileDestroy = (req,res,next)=>{
     var filename = req.filename;
     deleteFile(filename);

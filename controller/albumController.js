@@ -22,7 +22,7 @@ exports.getAlbum = async (req,res)=>{
 
 exports.postImage = (req,res)=>{
     let image = new Image(req.body)
-    image.save(()=>res.status(201).json({message:'image uploaded.!'}));
+    image.save(()=>res.status(201).json({message:'uploaded.!'}));
 }
 
 exports.deleteImage = async (req,res,next)=>{

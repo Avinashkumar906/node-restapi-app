@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet')
+const fileUploader = require('express-fileupload');
 const compression = require('compression');
 const userRouter = require('./routes/user')
 const mailRouter = require('./routes/mail')
@@ -16,10 +17,15 @@ if(!process.env.PORT){
     require('dotenv').config();
 }
 
+//file handler using multer
 var multer  = require('multer')
-
 var upload = multer({ dest: 'uploads/' })
+
 const app = express();
+//file handler using express
+app.use(fileUploader({
+    useTempFiles : true,
+}));
 
 // middlewares for internal usage.
 app.use(bodyParser.json());
@@ -38,6 +44,7 @@ app.use(mailRouter);
 app.use(userRouter);
 app.use(albumRouter);
 
+app.use('/uploadimagev2', fileController.fileUploaderv2)
 app.use('/uploadimage', upload.single('file'), fileController.fileUploader)
 
 app.use('',(req,res,next)=>{
