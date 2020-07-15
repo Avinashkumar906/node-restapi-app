@@ -3,7 +3,6 @@ const log = require('log-to-file')
 
 exports.getImage = async (req,res)=>{
     try {
-        
         let images = await Image.find({image:true})
         res.status(201).json(images);
     } catch (error) {
@@ -22,12 +21,16 @@ exports.getAlbum = async (req,res)=>{
 
 exports.postImage = (req,res)=>{
     let image = new Image(req.body)
-    image.save(()=>res.status(201).json({message:'uploaded.!'}));
+    image.save().then(
+        result=>res.status(201).json(result)
+    ).catch(
+        err=>res.status(400).json(err)
+    )   
 }
 
 exports.deleteImage = async (req,res,next)=>{
     try {
-        log("Image to delete Id:" + req.params.id +'<br/>')
+        log(`Image to delete Id: ${req.params.id} <br/>`)
         let image = await Image.findByIdAndDelete(req.params.id)
         req.filename = image.alt
         next();

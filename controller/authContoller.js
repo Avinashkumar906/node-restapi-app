@@ -1,6 +1,7 @@
 const User = require('../model/user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const log = require('log-to-file')
 
 exports.postUserLogin = async (req,res,next)=>{
     try {
@@ -41,10 +42,11 @@ exports.signUp = async (req, res, next) => {
     }
 }
 exports.verifyToken = (req,res,next)=>{
+    console.log(req.headers.authorization)
     var token;
     if(req.headers.authorization){
         token =  req.headers.authorization.split(' ')[1] 
-        console.log('This is token: ' + token)
+        //log(`This is token: ${token} <br/>`)
         jwt.verify(token,process.env.JWT_SECRET,(err,result)=>{
             if(!err) {
                 req.user = result;
