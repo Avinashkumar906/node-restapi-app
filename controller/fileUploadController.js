@@ -22,6 +22,22 @@ exports.fileUploader=(req,res,next)=>{
     );
 }
 
+exports.fileUploaderAndNext=(req,res,next)=>{
+    let tempfile = req.files.file;
+    log(`fileuploaderv2: ${JSON.stringify(tempfile)} <br/>`)
+    cloudinary.uploader.upload(tempfile.tempFilePath, (error, result)=>{
+            if(result){
+                req.url = result.secure_url;
+                req.alt = result.public_id;
+                next()
+            }
+            else{
+                res.send(error)
+            }
+        }
+    );  
+}
+
 exports.fileUploaderv2=(req,res,next)=>{
     let tempfile = req.files.file;
     log(`fileuploaderv2: ${JSON.stringify(tempfile)} <br/>`)

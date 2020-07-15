@@ -25,7 +25,8 @@ app.use(cors())
 
 
 //file handler using multer
-var multer  = require('multer')
+var multer  = require('multer');
+const { json } = require('body-parser');
 var upload = multer({ dest: 'uploads/' })
 
 
@@ -47,6 +48,11 @@ app.use('/uploadimagev2', fileController.fileUploaderv2)
 app.use('/uploadimage', upload.single('file'), fileController.fileUploader)
 
 //default route
+app.use('/development',(req,res,next)=>{
+    console.log(req.body.body)
+    res.json(req.body.body)
+})
+
 app.use('',(req,res,next)=>{
     res.setHeader('Content-Type', 'text/html')
     res.sendFile(path.join(__dirname,'default.log'))

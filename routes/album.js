@@ -10,6 +10,6 @@ router.get('/getalbums', albumController.getAlbum);
 router.get('/deleteimage/:id', authController.verifyToken, albumController.deleteImage, fileController.fileDestroy)
 router.get('/deletealbum/:id', authController.verifyToken, albumController.deleteAlbum, fileController.multiFiledestroy)
 
-router.post('/postimage', albumController.postImage);
+router.post('/postimage', authController.verifyToken, fileController.fileUploaderAndNext, albumController.postImage);
 
 module.exports = router;
