@@ -1,14 +1,10 @@
 const Image = require('../model/image')
 const log = require('log-to-file')
-const image = require('../model/image')
 
 exports.getImage = async (req,res)=>{
     try {
         let images = await Image.find()
-        let resultArray = images.filter(
-            item=>item.urls.length == 0
-        )
-        res.status(201).json(resultArray);
+        res.status(201).json(images);
     } catch (error) {
         res.status(500).json(error);
     } 
@@ -16,11 +12,14 @@ exports.getImage = async (req,res)=>{
 
 exports.getAlbum = async (req,res)=>{
     try {
-        let images = await Image.find()
-        let resultArray = images.filter(
-            item=>item.urls.length != 0
-        )
-        res.status(201).json(resultArray);
+        let filter = req.query.filter
+        let group = await Image.distinct(filter)
+        let album = await group.map(async (item)=>{
+            let temp = await Image.find().where(filter).equals(item)
+            return temp;
+        })
+        const result = await Promise.all(album)
+        res.status(201).json(result);
     } catch (error) {
         res.status(500).json(error);
     } 
