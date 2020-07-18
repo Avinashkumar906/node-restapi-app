@@ -26,11 +26,11 @@ exports.getAlbum = async (req,res)=>{
 }
 
 exports.postImage = (req,res)=>{
-    if(req.url && req.alt){
-        let image = JSON.parse(req.body.body);
+    let image = JSON.parse(req.body.body);
+    if(req.user.id == image.authorId && req.user.email == authorMail){
         image.url = req.url; 
         image.alt = req.alt;
-        console.log(image)
+        log(`image : ${image}`)
         let obj = new Image(image)
         obj.save().then(
             result=>res.status(201).json(result)
@@ -38,7 +38,7 @@ exports.postImage = (req,res)=>{
             err=>res.status(400).json(err)
         )
     }else{
-        res.json({'mesage':'please upload image!'})
+        res.json({mesage:'User not authorised'})
     }  
 }
 
