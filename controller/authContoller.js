@@ -9,9 +9,9 @@ exports.postUserLogin = async (req,res,next)=>{
         //checking existance of user
         if(user){
             let result = await  bcrypt.compare(req.body.password,user.password)
-            log(`User Logged in : ${user.email}`)
             //checking password
             if(result){
+                log(`User Logged in : ${user.email}<br/>`)
                 res.status(201).json({token:jwt.sign({role:user.role,email:user.email,id:user._id},process.env.JWT_SECRET),user:user})
             } else {
                 res.status(401).json({message:"Password does not match!"});
@@ -58,8 +58,8 @@ exports.verifyToken = (req,res,next)=>{
         jwt.verify(token,process.env.JWT_SECRET,(err,result)=>{
             if(!err) {
                 req.user = result;
-                res.status(200).json(result)
-                // next();
+                // res.status(200).json(result)
+                next();
             } else {
                 res.status(401).json({message:"Unauthorised user lll"}); 
             }
