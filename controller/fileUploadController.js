@@ -1,6 +1,11 @@
 const cloudinary = require('cloudinary').v2;
 const log = require('log-to-file')
 
+if(!process.env.PORT){
+    log('FileUploadController config.<br/>')
+    require('dotenv').config();
+}
+
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
     api_key: process.env.CLOUDINARY_KEY, 
@@ -25,17 +30,20 @@ exports.fileUploader=(req,res,next)=>{
 exports.fileUploaderAndNext=(req,res,next)=>{
     let tempfile = req.files.file;
     log(`fileuploaderv2: ${JSON.stringify(tempfile)} <br/>`)
+    // req.url = "https://res.cloudinary.com/sandyrocx/image/upload/v1595079760/b8ze2vle0sbnhvxxeatq.png";
+    // req.alt = "b8ze2vle0sbnhvxxeatq";    
+    // next()
     cloudinary.uploader.upload(tempfile.tempFilePath, (error, result)=>{
-            if(result){
-                req.url = result.secure_url;
-                req.alt = result.public_id;
-                next()
-            }
-            else{
-                res.send(error)
-            }
+        if(result){
+            req.url = result.secure_url;
+            req.alt = result.public_id;
+            log(`fileUploadController.fileUploaderAndNext(): ${result} <br/>`)
+            next()
         }
-    );  
+        else{
+            res.send(error)
+        }
+    });  
 }
 
 exports.fileUploaderv2=(req,res,next)=>{

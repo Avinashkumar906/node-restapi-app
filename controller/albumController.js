@@ -27,10 +27,11 @@ exports.getAlbum = async (req,res)=>{
 
 exports.postImage = (req,res)=>{
     let image = JSON.parse(req.body.body);
-    if(req.user.id == image.authorId && req.user.email == authorMail){
+    log(`albumController.postImage:`)
+    if(req.user.id == image.authorId && req.user.email == image.authorMail){
         image.url = req.url; 
         image.alt = req.alt;
-        log(`image : ${image}`)
+        log(`albumController.postImage: ${image}`)
         let obj = new Image(image)
         obj.save().then(
             result=>res.status(201).json(result)
