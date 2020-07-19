@@ -67,7 +67,6 @@ mongoose.connect(process.env.MONGO_URL, {
         app.listen(process.env.PORT || 8080,()=>console.log(`Server running at port ${process.env.PORT}<br/>`))
     } else {
         log(err +'<br/>')
-        app.listen(process.env.PORT || 8080,()=>console.log(`Server running at port ${process.env.PORT} without Mongo connectivity!<br/>`))
     }
 });
 
