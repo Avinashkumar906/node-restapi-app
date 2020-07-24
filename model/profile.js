@@ -12,7 +12,8 @@ const profileSchema = new Schema({
     blocked:{type:Boolean,default:false},
     verified:{type:Boolean,default:false},
     resettoken:String,
-    expiry:{type:String,default:(Date.now() + 24*3600)}
+    expiry:{type:String,default:(Date.now() + 24*3600)},
+    images:[{type:Schema.Types.ObjectId,ref:'Image'}]
 })
 
 module.exports = mongoose.model('profile', profileSchema)

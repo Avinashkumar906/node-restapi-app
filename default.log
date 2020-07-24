@@ -1,0 +1,27 @@
+2020.07.24, 14:31:14.0801 UTC -> Mongodb Up! <br/>
+2020.07.24, 14:40:03.0533 UTC -> Server is starting
+2020.07.24, 14:40:46.0060 UTC -> Mongodb Up! <br/>
+2020.07.24, 14:45:55.0920 UTC -> Server is starting
+2020.07.24, 14:46:28.0451 UTC -> Mongodb Up! <br/>
+2020.07.24, 14:48:05.0704 UTC -> Server is starting
+2020.07.24, 14:48:30.0926 UTC -> Mongodb Up! <br/>
+2020.07.24, 14:49:37.0855 UTC -> Server is starting
+2020.07.24, 14:49:58.0499 UTC -> Mongodb Up! <br/>
+2020.07.24, 14:51:06.0555 UTC -> Server is starting
+2020.07.24, 14:51:26.0017 UTC -> Mongodb Up! <br/>
+2020.07.24, 14:51:53.0202 UTC -> User Logged in : avinashkumar906@gmail.com<br/>
+2020.07.24, 14:52:50.0461 UTC -> Server is starting
+2020.07.24, 14:53:14.0757 UTC -> Mongodb Up! <br/>
+2020.07.24, 15:01:41.0250 UTC -> Server is starting
+2020.07.24, 15:02:17.0602 UTC -> Mongodb Up! <br/>
+2020.07.24, 15:03:23.0974 UTC -> Server is starting
+2020.07.24, 15:04:00.0971 UTC -> Mongodb Up! <br/>
+2020.07.24, 15:05:45.0530 UTC -> User Logged in : avinashkumar906@gmail.com<br/>
+2020.07.24, 15:05:51.0483 UTC -> userController.postNameAndBio() user logged: {"role":"admin","email":"avinashkumar906@gmail.com","id":"5f12c19aeda3ea4190d8a8a4","iat":1595603145}<br/>
+2020.07.24, 15:06:18.0641 UTC -> User Logged in : avinashkumar906@gmail.com<br/>
+2020.07.24, 15:06:24.0580 UTC -> userController.postNameAndBio() user logged: {"role":"admin","email":"avinashkumar906@gmail.com","id":"5f12c19aeda3ea4190d8a8a4","iat":1595603178}<br/>
+2020.07.24, 15:12:04.0516 UTC -> userController.postAboutSection() user logged: {"role":"admin","email":"avinashkumar906@gmail.com","id":"5f12c19aeda3ea4190d8a8a4","iat":1595603178}<br/>
+2020.07.24, 15:12:33.0328 UTC -> userController.postResumeSection() user logged: {"role":"admin","email":"avinashkumar906@gmail.com","id":"5f12c19aeda3ea4190d8a8a4","iat":1595603178}<br/>
+2020.07.24, 15:12:39.0294 UTC -> userController.postPortfolioSection() user logged: {"role":"admin","email":"avinashkumar906@gmail.com","id":"5f12c19aeda3ea4190d8a8a4","iat":1595603178}<br/>
+2020.07.24, 15:12:43.0798 UTC -> userController.postPortfolioSection() user logged: {"role":"admin","email":"avinashkumar906@gmail.com","id":"5f12c19aeda3ea4190d8a8a4","iat":1595603178}<br/>
+2020.07.24, 15:12:48.0531 UTC -> userController.postUserData() user logged: {"role":"admin","email":"avinashkumar906@gmail.com","id":"5f12c19aeda3ea4190d8a8a4","iat":1595603178}<br/>

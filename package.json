@@ -1,8 +1,8 @@
 {
-  "name": "resume-download",
+  "name": "expressjs-rest-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A node/express base rest api",
+  "main": "server.js",
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",
@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "log-to-file": "^2.0.2",
     "mongoose": "^5.7.1",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "nodemailer": "^6.3.0"
   },
@@ -24,12 +25,10 @@
     "nodemon": "^1.19.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "deploy": "git push https://git.heroku.com/api4asquare.git master",
-    "start:dev": "nodenv -f ."
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
+    "deploy": "git push https://git.heroku.com/api4asquare.git master"
   },
-  "author": "",
+  "author": "Avinash Aggarwal",
   "license": "ISC"
 }

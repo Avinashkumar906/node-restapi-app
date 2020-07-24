@@ -1,4 +1,5 @@
 const Image = require('../model/image')
+const Profile = require('../model/profile')
 const log = require('log-to-file');
 
 exports.getImage = async (req, res) => {
@@ -25,28 +26,31 @@ exports.getAlbum = async (req, res) => {
     }
 }
 
-exports.postImage = (req, res) => {
-    const image = JSON.parse(req.body.body);
-    log(`albumController.postImage:`)
-    if (req.user.id == image.authorId && req.user.email == image.authorMail) {
+exports.postImage = async (req, res) => {
+    try {
+        const image = JSON.parse(req.body.body);
+        const profile = await Profile.findById(req.user.id)
+        log(`albumController.postImage() profile posted: ${JSON.stringify(profile)}`)
         image.url = req.url;
         image.alt = req.alt;
         log(`albumController.postImage: ${image}`)
-        let obj = new Image(image)
-        obj.save().then(
-            result => res.status(201).json(result)
-        ).catch(
-            err => res.status(400).json(err)
-        )
-    } else {
-        res.json({ mesage: 'User not authorised' })
+        let imageToInsert = new Image(image)
+        // assigning image to user
+        imageToInsert.profile = profile;
+        let imageInserted = await imageToInsert.save()
+        // updating user
+        profile.images.push(imageInserted).profileToUpdate.save();
+        res.status(201).json(imageInserted)
+    } catch (error) {
+        res.status(500).json({message:error.message,error});
     }
+    
 }
 
 exports.deleteImage = async (req, res, next) => {
     const { id, authorId, authorMail } = req.query;
     try {
-        if (req.user.id ==  authorId && req.user.email == authorMail) {
+        if ((req.user.id ==  authorId && req.user.email == authorMail) || req.user.role == 'admin') {
             log(`Image to delete Id: ${id} <br/>`)
             let image = await Image.findByIdAndDelete(id)
             req.filename = image.alt

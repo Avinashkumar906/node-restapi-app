@@ -1,72 +1,34 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const helmet = require('helmet')
+const app = require('express')();
 const fileUploader = require('express-fileupload');
-const compression = require('compression');
-const userRouter = require('./routes/user')
-const mailRouter = require('./routes/mail')
-const albumRouter = require('./routes/album')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const path = require('path')
-const fileController = require('./controller/fileUploadController')
-const log = require('log-to-file')
-//init application
-const app = express();
 
-// setting enviroment variables
-if(!process.env.PORT){
-    log('This is Development enviroment!<br/>')
-    require('dotenv').config();
-}
-
-//setting Cors
-app.use(cors())
-
-
-//file handler using multer
-var multer  = require('multer');
-const { json } = require('body-parser');
-var upload = multer({ dest: 'uploads/' })
-
+// middlewares for internal usage.
+app.use(require('cors')())
+app.use(require('body-parser').json());
+app.use(require('helmet')());
+app.use(require('compression')());
+app.use(require('morgan')("combined"))
 
 //file handler using express
 app.use(fileUploader({
     useTempFiles : true,
 }));
 
-// middlewares for internal usage.
-app.use(bodyParser.json());
-app.use(helmet());
-app.use(compression());
-
 //routes
-app.use(mailRouter);
-app.use(userRouter);
-app.use(albumRouter);
-app.use('/uploadimagev2', fileController.fileUploaderv2)
-app.use('/uploadimage', upload.single('file'), fileController.fileUploader)
+app.use(require('./routes/mail'));
+app.use(require('./routes/user'));
+app.use(require('./routes/image'));
+app.use(require('./routes/portfolio'));
+app.use('/uploadimagev2', require('./controller/fileUploadController').fileUploaderv2)
 
-//default route
-app.use('/development',(req,res,next)=>{
-    console.log(req.body.body)
-    res.json(req.body.body)
-})
-
-app.use('',(req,res,next)=>{
+app.use('/logs',(req,res)=>{
     res.setHeader('Content-Type', 'text/html')
-    res.sendFile(path.join(__dirname,'default.log'))
+    res.sendFile(require('path').join(__dirname,'default.log'))
 })
 
-//mongo setup
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-},(err)=>{
-    if(!err){
-        app.listen(process.env.PORT || 8080,()=>console.log(`Server running at port ${process.env.PORT}<br/>`))
-    } else {
-        log(err +'<br/>')
-    }
-});
+app.use('',(req,res)=>{
+    res.setHeader('Content-Type', 'text/html')
+    res.sendFile(require('path').join(__dirname,'index.html'))
+})
 
+
+module.exports = app;

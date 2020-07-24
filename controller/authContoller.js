@@ -3,9 +3,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const log = require('log-to-file')
 
-exports.postUserLogin = async (req,res,next)=>{
+exports.signIn = async (req,res,next)=>{
     try {
-        var user = await User.findOne({email:req.body.email});
+        const email = req.body.email.toLowerCase()
+        const user = await User.findOne({email:email});
         //checking existance of user
         if(user){
             let result = await  bcrypt.compare(req.body.password,user.password)
@@ -26,7 +27,8 @@ exports.postUserLogin = async (req,res,next)=>{
 }
 exports.signUp = async (req, res, next) => {
     try {
-        let userfound = await User.findOne({ email: req.body.email})
+        const email = req.body.email.toLowerCase()
+        let userfound = await User.findOne({ email: email})
         if(userfound) 
             res.status(400).json({message:'user with email already exist!'})
         else{
@@ -48,7 +50,7 @@ exports.signUp = async (req, res, next) => {
             })
         }
     } catch (error) {
-        res.status(500).json({message:"Server down!"})
+        res.status(500).json({message:"Server down!",error})
     }
 }
 exports.verifyToken = (req,res,next)=>{
@@ -67,5 +69,4 @@ exports.verifyToken = (req,res,next)=>{
     } else {
         res.status(401).json({message:"Authorization Token Not Found"}); 
     }
-    
 }

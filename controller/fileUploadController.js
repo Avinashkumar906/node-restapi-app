@@ -23,19 +23,26 @@ exports.fileUploader=(req,res,next)=>{
 }
 
 exports.fileUploaderAndNext=(req,res,next)=>{
-    let tempfile = req.files.file;
-    log(`fileuploaderv2: ${JSON.stringify(tempfile)} <br/>`)
-    cloudinary.uploader.upload(tempfile.tempFilePath, (error, result)=>{
-        if(result){
-            req.url = result.secure_url;
-            req.alt = result.public_id;
-            log(`fileUploadController.fileUploaderAndNext(): ${result} <br/>`)
-            next()
-        }
-        else{
-            res.send(error)
-        }
-    });  
+    if(req.files.file){
+        let tempfile = req.files.file;
+        log(`fileuploaderv2: ${JSON.stringify(tempfile)} <br/>`)
+        cloudinary.uploader.upload(tempfile.tempFilePath, (error, result)=>{
+            if(result){
+                req.url = result.secure_url;
+                req.alt = result.public_id;
+                log(`fileUploadController.fileUploaderAndNext(): ${result} <br/>`)
+                next();
+            }
+            else{
+                res.send(error)
+                // req.url = 'result.secure_url';
+                // req.alt = 'result.public_id';
+                // next();
+            }
+        });  
+    } else {
+        res.send({'message':"please upload a file!"})
+    }
 }
 
 exports.fileUploaderv2=(req,res,next)=>{
@@ -55,9 +62,6 @@ exports.fileDestroy = (req,res,next)=>{
 
 exports.multiFiledestroy=(req,res)=>{
     var album = req.album
-    if(album.alt){
-        deleteFile(album.alt)
-    }
     album.urls.forEach(element => {
         deleteFile(element.alt)
     });
