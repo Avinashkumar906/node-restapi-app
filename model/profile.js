@@ -13,7 +13,7 @@ const profileSchema = new Schema({
     verified:{type:Boolean,default:false},
     resettoken:String,
     expiry:{type:String,default:(Date.now() + 24*3600)},
-    images:[{type:Schema.Types.ObjectId,ref:'Image'}]
+    images:[{type:Schema.Types.ObjectId,ref:'image'}]
 })
 
 module.exports = mongoose.model('profile', profileSchema)

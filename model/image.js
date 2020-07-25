@@ -7,6 +7,7 @@ const imageSchema = new Schema({
 	alt:{type:String, required: true},
 	place:{type:String},
 	group:{type:String, required: true},
+	author:{type:String, required: true},
     description:{type:String, required: true},
 	visible: { type: Boolean,default : true },
 	approved: { type: Boolean,default : false },
@@ -19,7 +20,7 @@ const imageSchema = new Schema({
 	year:{ type: Number , default: new Date().getFullYear()},
 	likes:[{ mail:String }],
 	heart:[{ mail:String }],
-	profile:{type:Schema.Types.ObjectId,ref:'Profile'},
+	profile:{type:Schema.Types.ObjectId,ref:'profile'},
 	comments: [
 		{
 			name:String,

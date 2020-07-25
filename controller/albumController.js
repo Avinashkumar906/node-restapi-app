@@ -28,38 +28,43 @@ exports.getAlbum = async (req, res) => {
 
 exports.postImage = async (req, res) => {
     try {
-        const image = JSON.parse(req.body.body);
-        const profile = await Profile.findById(req.user.id)
-        log(`albumController.postImage() profile posted: ${JSON.stringify(profile)}`)
+        let image = JSON.parse(req.body.body);
+        let profile = await Profile.findById(req.user.id)
         image.url = req.url;
         image.alt = req.alt;
-        log(`albumController.postImage: ${image}`)
-        let imageToInsert = new Image(image)
-        // assigning image to user
-        imageToInsert.profile = profile;
-        let imageInserted = await imageToInsert.save()
-        // updating user
-        profile.images.push(imageInserted).profileToUpdate.save();
-        res.status(201).json(imageInserted)
+            log(`albumController.postImage: ${image}`)
+        image = new Image(image)
+            // assigning image to user
+        image.profile = profile;
+        image = await image.save()
+            // updating user
+        profile.images.push(image)
+        profile.save()
+        res.status(201).json(image)
     } catch (error) {
+        console.log(error)
         res.status(500).json({message:error.message,error});
     }
     
 }
 
 exports.deleteImage = async (req, res, next) => {
-    const { id, authorId, authorMail } = req.query;
+    const { id } = req.query;
     try {
-        if ((req.user.id ==  authorId && req.user.email == authorMail) || req.user.role == 'admin') {
-            log(`Image to delete Id: ${id} <br/>`)
-            let image = await Image.findByIdAndDelete(id)
+        let image = await Image.findById(id)
+        let profile = await Profile.findById(req.user.id)
+        if ( req.user.role == 'admin' || (image.profile == req.user.id)) {
+            //removing from profile       
+            profile.images.splice(profile.images.indexOf(id),1)
             req.filename = image.alt
+            image.deleteOne()
+            profile.save()
             next();
         }else{
-            console.log("Not authorised !")
             res.status(400).json({message:"Not authorised !"});    
         }
     } catch (error) {
+        console.log(error)
         res.status(500).json({message:error.message,error});
     }
 }

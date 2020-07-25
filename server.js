@@ -5,15 +5,14 @@ if(!process.env.PORT){
     require('dotenv').config();
 }
 
-const app = require('./app')
 const mongoose = require('mongoose');
+const app = require('./app')
+
+//mongo setup
+mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true,useUnifiedTopology: true},(err)=>{
+    err ? log(`Mongodb error ${err}<br/>`) : log(`Mongodb Up! <br/>`);
+});
 
 
 //Starting server on specified port
-app.listen(process.env.PORT || 8080,()=>{
-    //mongo setup
-    mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true,useUnifiedTopology: true},(err)=>{
-        err ? log(`Mongodb error ${err}<br/>`) : log(`Mongodb Up! <br/>`);
-    });
-    console.log(`Server running at port ${process.env.PORT}<br/>`)
-});
+app.listen(process.env.PORT || 8080,()=>console.log(`Server running at port ${process.env.PORT}<br/>`));

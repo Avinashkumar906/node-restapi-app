@@ -34,10 +34,10 @@ exports.fileUploaderAndNext=(req,res,next)=>{
                 next();
             }
             else{
-                res.send(error)
-                // req.url = 'result.secure_url';
-                // req.alt = 'result.public_id';
-                // next();
+                // res.send(error)
+                req.url = dummy.secure_url;
+                req.alt = dummy.public_id;
+                next();
             }
         });  
     } else {

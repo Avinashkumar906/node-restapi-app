@@ -27,7 +27,7 @@
   "scripts": {
     "start": "node server.js",
     "start:dev": "nodemon server.js",
-    "deploy": "git push https://git.heroku.com/api4asquare.git master"
+    "deploy": "git push https://git.heroku.com/api4asquare.git dev:master"
   },
   "author": "Avinash Aggarwal",
   "license": "ISC"
