@@ -44,11 +44,15 @@ exports.fileUploaderAndNext=(req,res,next)=>{
         res.send({'message':"please upload a file!"})
     }
 }
-
+const dummy = {
+    secure_url : 'https://images.pexels.com/photos/1591060/pexels-photo-1591060.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    public_id : 'dummy'
+}
 exports.fileUploaderv2=(req,res,next)=>{
     let tempfile = req.files.file;
     log(`fileuploaderv2: ${JSON.stringify(tempfile)} <br/>`)
     cloudinary.uploader.upload(tempfile.tempFilePath, (error, result)=>{
+        // error ? res.send(dummy) : '';
         error ? res.send(error) : res.status(201).send(result)
         }
     );  

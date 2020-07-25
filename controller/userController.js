@@ -37,6 +37,7 @@ module.exports = {
                 let user = await User.findOne({email:mail});
                     user.name = req.body.name;
                     user.bio = req.body.bio;
+                    user.image = req.body.image;
                 user.save((err,result)=>{
                     !err ? res.status(201).json(result) : res.status(401).json({message:"User data not found!",err})
                 })
