@@ -1,7 +1,8 @@
 const log = require('log-to-file')
+log(`Server is starting`);
+
 // setting enviroment variables
 if(!process.env.PORT){
-    log(`Server is starting`);
     require('dotenv').config();
 }
 

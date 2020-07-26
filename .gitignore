@@ -1,7 +1,7 @@
 # Dependency directories
 node_modules/
 tmp/
-*.log
+default.log
 
 # Optional npm cache directory
 .npm
