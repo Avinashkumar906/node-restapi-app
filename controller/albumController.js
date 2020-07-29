@@ -1,10 +1,12 @@
 const Image = require('../model/image')
 const Profile = require('../model/profile')
 const log = require('log-to-file');
+const _ = require('lodash')
 
 exports.getImage = async (req, res) => {
     try {
         let images = await Image.find()
+        images = _.reverse(images)
         res.status(201).json(images);
     } catch (error) {
         res.status(500).json(error);
