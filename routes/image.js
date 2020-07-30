@@ -6,12 +6,13 @@ const authController = require('../controller/authContoller')
 const router = express();
 
 router.route('/image')
-    .get()
+    .get(authController.verifyToken,albumController.getImage)
     .post(authController.verifyToken, fileController.fileUploaderAndNext, albumController.postImage)
+    .patch(authController.verifyToken, albumController.patchImage)
     .delete(authController.verifyToken, albumController.deleteImage, fileController.fileDestroy)
 
 router.route('/images')
-    .get(albumController.getImage)
+    .get(albumController.getImages)
     .post()
 
 router.route('/albums')

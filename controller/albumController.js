@@ -3,7 +3,7 @@ const Profile = require('../model/profile')
 const log = require('log-to-file');
 const _ = require('lodash')
 
-exports.getImage = async (req, res) => {
+exports.getImages = async (req, res) => {
     try {
         let images = await Image.find()
         images = _.reverse(images)
@@ -12,7 +12,16 @@ exports.getImage = async (req, res) => {
         res.status(500).json(error);
     }
 }
-
+exports.getImage = async (req, res) => {
+    try {
+        const { id } = req.query;
+        console.log(id)
+        let image = await Image.findById(id)
+        res.status(201).json(image);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 exports.getAlbum = async (req, res) => {
     try {
         let filter = req.query.filter
@@ -25,6 +34,16 @@ exports.getAlbum = async (req, res) => {
         res.status(201).json(result);
     } catch (error) {
         res.status(500).json(error);
+    }
+}
+exports.patchImage = async (req, res) => {
+    const id = req.body._id;
+    const update = req.body;
+    if (req.user.role == 'admin' || (image.profile == req.user.id)) {
+        let result = await Image.findByIdAndUpdate(id, update,{useFindAndModify:true})
+        res.status(201).json(result);
+    } else{
+        res.status(400).json({message:"Not authorised !"}); 
     }
 }
 
