@@ -41,6 +41,7 @@ exports.patchImage = async (req, res) => {
     const update = req.body;
     if (req.user.role == 'admin' || (image.profile == req.user.id)) {
         let result = await Image.findByIdAndUpdate(id, update,{useFindAndModify:true})
+        result = await Image.findById(id)
         res.status(201).json(result);
     } else{
         res.status(400).json({message:"Not authorised !"}); 
