@@ -37,10 +37,11 @@ exports.getAlbum = async (req, res) => {
     }
 }
 exports.patchImage = async (req, res) => {
-    const id = req.body._id;
+    const { id } = req.query;
     const update = req.body;
+    console.log(id)
     if (req.user.role == 'admin' || (image.profile == req.user.id)) {
-        let result = await Image.findByIdAndUpdate(id, update,{useFindAndModify:true})
+        let result = await Image.findByIdAndUpdate(id, update, {useFindAndModify:false})
         result = await Image.findById(id)
         res.status(201).json(result);
     } else{
