@@ -92,13 +92,40 @@ exports.deleteImage = async (req, res, next) => {
     }
 }
 
-exports.deleteAlbum = async (req, res, next) => {
+exports.likeImage = async (req, res, next) => {
+    const { userid,imageid } = req.query;
     try {
-        log("Album to delete Id:" + req.params.id + '<br/>')
-        let image = await Image.findByIdAndDelete(req.params.id)
-        req.album = image
-        next()
+        let image = await Image.findById(imageid)
+        if ( req.user.role == 'admin' || (userid == req.user.id)) {
+            let result = _.findIndex(image.likes,(id)=>id === userid)
+            // logic to like and dislike
+            result < 0 ? image.likes.push(userid) : image.likes.splice(result,1)
+            image.save();
+            res.status(200).json(image);
+        }else{
+            res.status(400).json({message:"Not authorised !"});    
+        }
     } catch (error) {
-        res.status(500).json(error);
+        console.log(error)
+        res.status(500).json({message:error.message,error});
+    }
+}
+
+exports.heartImage = async (req, res, next) => {
+    const { userid,imageid } = req.query;
+    try {
+        let image = await Image.findById(imageid)
+        if ( req.user.role == 'admin' || (userid == req.user.id)) {
+            let result = _.findIndex(image.heart,(id)=>id === userid)
+            // logic to heart and disheart
+            result < 0 ? image.heart.push(userid) : image.heart.splice(result,1)
+            image.save();
+            res.status(200).json(image);
+        }else{
+            res.status(400).json({message:"Not authorised !"});    
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message:error.message,error});
     }
 }

@@ -18,4 +18,10 @@ router.route('/images')
 router.route('/albums')
     .get(albumController.getAlbum);
 
+router.route('/likeimage')
+    .get(authController.verifyToken,albumController.likeImage)
+
+router.route('/heartimage')
+    .get(authController.verifyToken,albumController.heartImage)
+
 module.exports = router;

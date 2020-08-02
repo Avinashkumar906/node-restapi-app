@@ -18,8 +18,8 @@ const imageSchema = new Schema({
 	day:{ type: Number , default: new Date().getDate()},
 	month:{ type: String , default: new Date().toLocaleString('default', { month: 'long' })},
 	year:{ type: Number , default: new Date().getFullYear()},
-	likes:[{ mail:String }],
-	heart:[{ mail:String }],
+	likes:[{type:String}],
+	heart:[{type:String }],
 	profile:{type:Schema.Types.ObjectId,ref:'profile'},
 	comments: [
 		{
