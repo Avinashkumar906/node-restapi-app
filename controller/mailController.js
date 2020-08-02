@@ -1,67 +1,14 @@
-const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const mailgun = require("mailgun-js");
+const mg = mailgun({apiKey: process.env.MAILGUN_KEY, domain: process.env.MAILGUN_DOMAIN});
 
 exports.postMail = (req, res, err) => {
-    const msg = {
-        to: process.env.DEFAULT_EMAIL,
-        from: req.body.email,
-        subject: req.body.subject,
-        text: 'Welcome!',
-        html: `<strong>Mail from ${req.body.name}</strong><br>
-        <p>${req.body.message}</p>`,
+    const data = {
+        from: 'Excited User<me@samples.mailgun.org>',
+        to: 'avinashkumar906@gmail.com',
+        subject: 'Hello',
+        text: 'Testing some Mailgun awesomness!'
     };
-    sgMail.send(msg).then(
-        (result) => {
-            res.setHeader('Content-Type', 'application/json')
-            res.status(202).json(result)
-        }
-    ).catch(
-        (err) => {
-            res.setHeader('Content-Type', 'application/json')
-            res.status(400).json(err)
-        }
-    )
-}
-exports.postToMarble = (req, res, err)=> {
-    const msg = {
-        to: process.env.DEFAULT_EMAIL,
-        from: req.body.email,
-        subject: req.body.subject,
-        text: req.body.text,
-        html: `<strong>Mail from ${req.body.name}</strong><br>
-        <p><strong>${req.body.message}</strong></p>
-        <p><strong>Warm regards</strong><br><strong>MArble Group</strong></p>`,
-    };
-    sgMail.send(msg).then(
-        (result) => {
-            res.setHeader('Content-Type', 'application/json')
-            res.status(202).json(result)
-        }
-    ).catch(
-        (err) => {
-            res.setHeader('Content-Type', 'application/json')
-            res.status(400).json(err)
-        }
-    )
-}
-exports.postToCharity = (req, res, err) => {
-    const msg = {
-        to: process.env.DEFAULT_EMAIL,
-        from: req.body.email,
-        subject: req.body.subject,
-        text: 'and easy to do anywhere, even with Node.js',
-        html: `<strong>Mail from ${req.body.name}</strong><br>
-        <p>${req.body.message}</p>`,
-    };
-    sgMail.send(msg)
-    .then(
-    (result) => {
-        res.setHeader('Content-Type', 'application/json')
-        res.status(202).json(result)
-    })
-    .catch(
-    (err) => {
-        res.setHeader('Content-Type', 'application/json')
-        res.status(400).json(err)
-    })
+    mg.messages().send(data, function (error, body) {
+        res.json({error,body});
+    });
 }
