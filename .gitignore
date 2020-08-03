@@ -1,10 +1,12 @@
 # Dependency directories
 node_modules/
 tmp/
-./default.log
+*.log
 
 # Optional npm cache directory
 .npm
 
 # dotenv environment variables file
 .env
+node_modules
+default.log

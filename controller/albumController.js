@@ -5,7 +5,7 @@ const _ = require('lodash')
 
 exports.getImages = async (req, res) => {
     try {
-        let images = await Image.find()
+        let images = await Image.find({private: null|false})
         images = _.reverse(images)
         res.status(201).json(images);
     } catch (error) {
@@ -15,23 +15,18 @@ exports.getImages = async (req, res) => {
 exports.getImage = async (req, res) => {
     try {
         const { id } = req.query;
-        console.log(id)
         let image = await Image.findById(id)
         res.status(201).json(image);
     } catch (error) {
         res.status(500).json(error);
     }
 }
-exports.getAlbum = async (req, res) => {
+exports.getPrivate = async (req, res) => {
     try {
-        let filter = req.query.filter
-        let group = await Image.distinct(filter)
-        let album = await group.map(async (item) => {
-            let temp = await Image.find().where(filter).equals(item)
-            return temp;
-        })
-        const result = await Promise.all(album)
-        res.status(201).json(result);
+        const { id } = req.user
+        let images = await Image.find({profile: id})
+        images = _.reverse(images)
+        res.status(201).json(images);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -39,7 +34,6 @@ exports.getAlbum = async (req, res) => {
 exports.patchImage = async (req, res) => {
     const { id } = req.query;
     const update = req.body;
-    console.log(id)
     if (req.user.role == 'admin' || (image.profile == req.user.id)) {
         let result = await Image.findByIdAndUpdate(id, update, {useFindAndModify:false})
         result = await Image.findById(id)

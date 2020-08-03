@@ -15,8 +15,8 @@ router.route('/images')
     .get(albumController.getImages)
     .post()
 
-router.route('/albums')
-    .get(albumController.getAlbum);
+router.route('/private')
+    .get(authController.verifyToken,albumController.getPrivate);
 
 router.route('/likeimage')
     .get(authController.verifyToken,albumController.likeImage)
