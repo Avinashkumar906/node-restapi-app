@@ -33,7 +33,8 @@ exports.getMyUploads = async (req, res) => {
 }
 exports.patchImage = async (req, res) => {
     const { id } = req.query;
-    const update = req.body;
+    let update = req.body;
+    update.tags = update.tags.split(',')
     if (req.user.role == 'admin' || (image.profile == req.user.id)) {
         let result = await Image.findByIdAndUpdate(id, update, {useFindAndModify:false})
         result = await Image.findById(id)
