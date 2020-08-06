@@ -9,3 +9,63 @@
 2020.08.02, 14:24:15.0310 UTC -> Mongodb Up! <br/>
 2020.08.02, 14:24:52.0497 UTC -> Server is starting
 2020.08.02, 14:25:03.0464 UTC -> Mongodb Up! <br/>
+2020.08.04, 04:56:46.0713 UTC -> Server is starting
+2020.08.04, 04:58:08.0460 UTC -> Mongodb error Error: querySrv ENOTFOUND _mongodb._tcp.cluster0-2c0br.mongodb.net<br/>
+2020.08.04, 05:01:40.0594 UTC -> Server is starting
+2020.08.04, 05:02:02.0057 UTC -> Mongodb Up! <br/>
+2020.08.04, 05:41:41.0741 UTC -> User Logged in : cutesandy906@gmail.com<br/>
+2020.08.05, 05:01:53.0095 UTC -> Server is starting
+2020.08.05, 05:03:20.0313 UTC -> Mongodb error MongoNetworkError: getaddrinfo ENOTFOUND cluster0-shard-00-02-2c0br.mongodb.net<br/>
+2020.08.05, 08:40:27.0891 UTC -> Server is starting
+2020.08.05, 08:41:30.0454 UTC -> Mongodb Up! <br/>
+2020.08.05, 10:13:18.0053 UTC -> User Logged in : avinashkumar906@gmail.com<br/>
+2020.08.06, 07:11:06.0195 UTC -> Server is starting
+2020.08.06, 07:12:01.0601 UTC -> Mongodb error Error: querySrv ENOTFOUND _mongodb._tcp.cluster0-2c0br.mongodb.net<br/>
+2020.08.06, 07:12:24.0629 UTC -> Server is starting
+2020.08.06, 07:13:12.0585 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:23:09.0263 UTC -> User Logged in : avinashkumar906@gmail.com<br/>
+2020.08.06, 08:24:19.0809 UTC -> Server is starting
+2020.08.06, 08:25:03.0112 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:25:12.0350 UTC -> User Logged in : avinashkumar906@gmail.com<br/>
+2020.08.06, 08:28:52.0973 UTC -> Server is starting
+2020.08.06, 08:29:36.0590 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:43:04.0072 UTC -> Server is starting
+2020.08.06, 08:43:15.0706 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:46:30.0621 UTC -> Server is starting
+2020.08.06, 08:46:44.0587 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:47:10.0743 UTC -> Server is starting
+2020.08.06, 08:47:19.0907 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:48:56.0165 UTC -> Server is starting
+2020.08.06, 08:49:06.0117 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:50:03.0733 UTC -> Server is starting
+2020.08.06, 08:50:14.0308 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:50:56.0126 UTC -> Server is starting
+2020.08.06, 08:51:12.0340 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:52:01.0703 UTC -> Server is starting
+2020.08.06, 08:52:12.0578 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:52:48.0075 UTC -> Server is starting
+2020.08.06, 08:52:59.0526 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:53:04.0430 UTC -> Server is starting
+2020.08.06, 08:53:18.0340 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:53:21.0970 UTC -> Server is starting
+2020.08.06, 08:53:30.0762 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:53:59.0237 UTC -> Server is starting
+2020.08.06, 08:54:10.0141 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:55:20.0436 UTC -> Server is starting
+2020.08.06, 08:55:30.0924 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:55:46.0422 UTC -> Server is starting
+2020.08.06, 08:55:56.0907 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:56:48.0834 UTC -> Server is starting
+2020.08.06, 08:56:59.0155 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:57:31.0190 UTC -> Server is starting
+2020.08.06, 08:57:43.0666 UTC -> Mongodb Up! <br/>
+2020.08.06, 08:59:42.0446 UTC -> Server is starting
+2020.08.06, 08:59:52.0635 UTC -> Mongodb Up! <br/>
+2020.08.06, 09:01:50.0664 UTC -> Server is starting
+2020.08.06, 09:02:25.0350 UTC -> Mongodb Up! <br/>
+2020.08.06, 09:21:15.0625 UTC -> Server is starting
+2020.08.06, 09:21:29.0513 UTC -> Mongodb Up! <br/>
+2020.08.06, 09:21:42.0020 UTC -> Server is starting
+2020.08.06, 09:21:58.0059 UTC -> Mongodb Up! <br/>
+2020.08.06, 09:37:59.0563 UTC -> Server is starting
+2020.08.06, 09:38:12.0241 UTC -> Mongodb Up! <br/>

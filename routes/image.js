@@ -15,13 +15,26 @@ router.route('/images')
     .get(albumController.getImages)
     .post()
 
-router.route('/private')
-    .get(authController.verifyToken,albumController.getPrivate);
+router.route('/myuploads')
+    .get(authController.verifyToken,albumController.getMyUploads);
 
 router.route('/likeimage')
     .get(authController.verifyToken,albumController.likeImage)
 
 router.route('/heartimage')
     .get(authController.verifyToken,albumController.heartImage)
+
+router.route('/mytags')
+    .get(authController.verifyToken,albumController.getTagged)
+    .post()
+
+router.route('/myliked')
+    .get(authController.verifyToken,albumController.getLiked)
+
+router.route('/myfavorite')
+    .get(authController.verifyToken,albumController.getFavorite)
+
+router.route('/myPrivate')
+    .get(authController.verifyToken,albumController.getPrivate)
 
 module.exports = router;

@@ -13,7 +13,7 @@ const imageSchema = new Schema({
 	approved: { type: Boolean,default : false },
 	private:{ type: Boolean,default : false },
 	more:String,
-	tags:String,
+	tags:[{type:String}],
 	storageUrl:String,
 	day:{ type: Number , default: new Date().getDate()},
 	month:{ type: String , default: new Date().toLocaleString('default', { month: 'long' })},

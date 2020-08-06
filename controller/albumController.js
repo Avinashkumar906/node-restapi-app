@@ -21,7 +21,7 @@ exports.getImage = async (req, res) => {
         res.status(500).json(error);
     }
 }
-exports.getPrivate = async (req, res) => {
+exports.getMyUploads = async (req, res) => {
     try {
         const { id } = req.user
         let images = await Image.find({profile: id})
@@ -42,11 +42,61 @@ exports.patchImage = async (req, res) => {
         res.status(400).json({message:"Not authorised !"}); 
     }
 }
-
+exports.getTagged = async (req, res) => {
+    try {
+        const { email }= req.user
+        let images = await Image.find({tags: email})
+        images = _.reverse(images)
+        res.status(201).json(images);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+exports.getLiked = async (req, res) => {
+    try {
+        const { id }= req.user
+        let images = await Image.find({likes: id})
+        images = _.reverse(images)
+        res.status(201).json(images);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+exports.getPrivate = async (req, res) => {
+    try {
+        const { id }= req.user
+        let images = await Image.find({profile: id,private:true})
+        images = _.reverse(images)
+        res.status(201).json(images);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+exports.getFavorite = async (req, res) => {
+    try {
+        const { id }= req.user
+        let images = await Image.find({heart: id})
+        images = _.reverse(images)
+        res.status(201).json(images);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+exports.untagMe = async (req, res) => {
+    try {
+        const { id }= req.user
+        let images = await Image.find({heart: id})
+        images = _.reverse(images)
+        res.status(201).json(images);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 exports.postImage = async (req, res) => {
     try {
         let image = JSON.parse(req.body.body);
         let profile = await Profile.findById(req.user.id)
+        image.tags = image.tags.split(',')
         image.url = req.url;
         image.alt = req.alt;
             log(`albumController.postImage: ${image}`)
