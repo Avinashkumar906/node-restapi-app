@@ -24,6 +24,9 @@ router.route('/likeimage')
 router.route('/heartimage')
     .get(authController.verifyToken,albumController.heartImage)
 
+router.route('/tagimage')
+    .get(authController.verifyToken,albumController.tagImage)
+
 router.route('/mytags')
     .get(authController.verifyToken,albumController.getTagged)
     .post()

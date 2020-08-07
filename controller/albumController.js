@@ -174,3 +174,22 @@ exports.heartImage = async (req, res, next) => {
         res.status(500).json({message:error.message,error});
     }
 }
+
+exports.tagImage = async (req, res, next) => {
+    const { email,imageid } = req.query;
+    try {
+        let image = await Image.findById(imageid)
+        if ( req.user.role == 'admin' || (email == req.user.email)) {
+            let result = _.findIndex(image.tags,(email)=>email === email)
+            // logic to heart and disheart
+            result < 0 ? image.tags.push(email) : image.tags.splice(result,1)
+            image.save();
+            res.status(200).json(image);
+        }else{
+            res.status(400).json({message:"Not authorised !"});    
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message:error.message,error});
+    }
+}
