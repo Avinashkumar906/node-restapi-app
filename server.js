@@ -1,7 +1,7 @@
 const log = require('log-to-file')
 log(`Server is starting`);
 
-// setting enviroment variables
+//Setting enviroment variables for app to run localhost
 if(!process.env.PORT){
     require('dotenv').config();
 }
@@ -9,7 +9,7 @@ if(!process.env.PORT){
 const mongoose = require('mongoose');
 const app = require('./app')
 
-//mongo setup
+//Mongo setup
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true,useUnifiedTopology: true},(err)=>{
     err ? log(`Mongodb error ${err}<br/>`) : log(`Mongodb Up! <br/>`);
 });

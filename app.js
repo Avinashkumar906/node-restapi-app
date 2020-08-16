@@ -1,5 +1,9 @@
 const app = require('express')();
 const fileUploader = require('express-fileupload');
+const path = require('path')
+
+// Static folder
+app.use('/public',require('express').static(path.join(__dirname,'public')))
 
 // middlewares for internal usage.
 app.use(require('cors')())
@@ -27,7 +31,7 @@ app.use('/logs',(req,res)=>{
 
 app.use('',(req,res)=>{
     res.setHeader('Content-Type', 'text/html')
-    res.sendFile(require('path').join(__dirname,'index.html'))
+    res.sendFile(require('path').join(__dirname,'public','index.html'))
 })
 
 
