@@ -29,7 +29,7 @@ router.route('/usercontact')
 
 router.route('/resume')
     .get((req,res)=>{
-        res.download(require('path').join(__dirname,'../','Profile.doc'))
+        res.download(require('path').join(__dirname,'../','Profile.docx'))
     })
 
 module.exports = router;
