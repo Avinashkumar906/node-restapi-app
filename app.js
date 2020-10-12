@@ -22,6 +22,7 @@ app.use(require('./routes/mail'));
 app.use(require('./routes/user'));
 app.use(require('./routes/image'));
 app.use(require('./routes/portfolio'));
+app.use(require('./routes/fortyapp'));
 app.use('/uploadimagev2', require('./controller/fileUploadController').fileUploaderv2)
 
 app.use('/logs',(req,res)=>{
