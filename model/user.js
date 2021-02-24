@@ -7,6 +7,7 @@ const userSchema = new Schema({
     name:String,
     bio:String,
     image:String,
+    cover:String,
     about:{
         name:String,
         designation:String,

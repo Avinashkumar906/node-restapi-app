@@ -9,6 +9,7 @@ const profileSchema = new Schema({
     bio:{type:String,default:'default bio!'},
     image:String,
     mob:String,
+    cover:String,
     blocked:{type:Boolean,default:false},
     verified:{type:Boolean,default:false},
     resettoken:String,
