@@ -7,6 +7,9 @@ const router = express();
 router.route('/userdata')
     .get(User.getUserData)
 
+router.route('/portfolio')
+    .get(User.getPortfolioUser)
+
 router.route('/nameandbio')
     .get()
     .post(Auth.verifyToken, User.postNameAndBio)

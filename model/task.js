@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
 	title:{type:String},
-    html:{type:String, required: true},
+	html:{type:String, required: true},
 	visible: { type: Boolean,default : true },
 	private:{ type: Boolean,default : false },
 	date:{ type : Date, default: new Date()},

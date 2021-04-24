@@ -5,7 +5,7 @@ const taskBoardSchema = new Schema({
 	title:{type:String, required: true},
 	imgSrc:{type:String},
 	author:{type:String},
-    description:{type:String, required: true},
+	description:{type:String, required: true},
 	visible: { type: Boolean,default : true },
 	private:{ type: Boolean,default : false },
 	date:{ type : Date, default: new Date()},

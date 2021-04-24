@@ -1,4 +1,9 @@
 const User = require('../model/user')
+const Profile = require('../model/profile')
+const About = require('../model/about')
+const Resume = require('../model/resume')
+const Project = require('../model/project')
+const Contact = require('../model/contact')
 const log = require('log-to-file')
 
 module.exports = {
@@ -97,6 +102,19 @@ module.exports = {
             }
         } catch (error) {
             res.status(400).json({message:"some error occured!"})
+        }
+    },
+    // Api for v2 
+    getPortfolioUser: async (req, res, next) => {
+        try {
+            const email = process.env.DEFAULT_EMAIL;
+            let profile = await Profile.findOne(
+                { email: email},
+                {password:0,images:0})
+            .populate(['about','resume','project','contact']).exec();
+            res.status(201).json(profile)
+        } catch (error) {
+            res.status(400).json(error)
         }
     }
 }
