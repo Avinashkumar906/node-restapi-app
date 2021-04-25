@@ -7,10 +7,10 @@ const Contact = require('../model/contact')
 const log = require('log-to-file')
 
 module.exports = {
+    // Depricated function
     getUserData:async (req, res, next) => {
         try {        
             const mail = process.env.DEFAULT_EMAIL;
-            // fetching data from mongoDB
             const result = await User.findOne({ email: mail});
             res.status(201).json(result)
         } catch (error) {
@@ -21,12 +21,12 @@ module.exports = {
         try {
             log(`userController.postAboutSection() user logged: ${JSON.stringify(req.user)}<br/>`)
             if(req.user && req.user.email == process.env.DEFAULT_EMAIL){
-            let mail = process.env.DEFAULT_EMAIL;
-            let user = await User.findOne({email:mail});
-                user.about = req.body;
-                user.save((err,result)=>{
+                const mail = process.env.DEFAULT_EMAIL;
+                const user = await Profile.findOne({email:mail});
+                const about = await About.findById(user.about);
+                about.replaceOne(req.body,(err,result)=>{
                     !err ? res.status(201).json(result) : res.status(401).json({message:"User data not found!",err})
-                })
+                });
             } else {
                 res.status(401).json( { message:"Unauthorised User!" } )
             }
@@ -39,7 +39,7 @@ module.exports = {
             log(`userController.postNameAndBio() user logged: ${JSON.stringify(req.user)}<br/>`);
             if(req.user && req.user.email == process.env.DEFAULT_EMAIL){
                 let mail = process.env.DEFAULT_EMAIL;
-                let user = await User.findOne({email:mail});
+                let user = await Profile.findOne({email:mail});
                     user.name = req.body.name;
                     user.bio = req.body.bio;
                     user.image = req.body.image;
@@ -57,10 +57,10 @@ module.exports = {
         try {
             log(`userController.postUserData() user logged: ${JSON.stringify(req.user)}<br/>`)
             if(req.user && req.user.email == process.env.DEFAULT_EMAIL){
-                let mail = process.env.DEFAULT_EMAIL;
-                let user = await User.findOne({email:mail});
-                user.contact = req.body;
-                user.save((err,result)=>{
+                const mail = process.env.DEFAULT_EMAIL;
+                const user = await Profile.findOne({email:mail});
+                const contact = await Contact.findById(user.contact);
+                contact.replaceOne(req.body, (err, result)=>{
                     !err ? res.status(201).json(result) : res.status(401).json({message:"User data not found!",err})
                 })
             } else {
@@ -74,10 +74,10 @@ module.exports = {
         try {
             log(`userController.postPortfolioSection() user logged: ${JSON.stringify(req.user)}<br/>`)
             if(req.user && req.user.email == process.env.DEFAULT_EMAIL){
-            let mail = process.env.DEFAULT_EMAIL;
-            let user = await User.findOne({email:mail})
-                user.portfolio = req.body;
-                user.save((err,result)=>{
+                const mail = process.env.DEFAULT_EMAIL;
+                const user = await Profile.findOne({email:mail})
+                const project = await Project.findById(user.project);
+                project.replaceOne(req.body,(err,result)=>{
                     !err ? res.status(201).json(result) : res.status(401).json({message:"User data not found!",err})
                 })
             } else {
@@ -91,10 +91,10 @@ module.exports = {
         try {
             log(`userController.postResumeSection() user logged: ${JSON.stringify(req.user)}<br/>`)
             if(req.user && req.user.email == process.env.DEFAULT_EMAIL){
-                let mail = process.env.DEFAULT_EMAIL;
-                let user = await User.findOne({email:mail})
-                user.resume = req.body;
-                user.save((err,result)=>{
+                const mail = process.env.DEFAULT_EMAIL;
+                const user = await Profile.findOne({email:mail})
+                const resume = await Resume.findById(user.resume)
+                resume.replaceOne(req.body, (err,result)=>{
                     !err ? res.status(201).json(result) : res.status(401).json({message:"User data not found!",err})
                 })
             } else {
