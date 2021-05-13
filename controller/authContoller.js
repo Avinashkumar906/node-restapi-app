@@ -6,14 +6,16 @@ const log = require('log-to-file')
 exports.signIn = async (req,res,next)=>{
     try {
         const email = req.body.email.toLowerCase()
-        const user = await User.findOne({email:email},{email:1,name:1,password:1,role:1,_id:1});
+        const user = await User.findOne({email:email}).lean();
         //checking existance of user
         if(user){
             let result = await  bcrypt.compare(req.body.password,user.password)
             //checking password
             if(result){
                 log(`User Logged in : ${user.email}<br/>`)
-                res.status(201).json({token:jwt.sign({role:user.role,email:user.email,id:user._id},process.env.JWT_SECRET),user:user})
+                let token = jwt.sign({role:user.role,email:user.email,id:user._id},process.env.JWT_SECRET);
+                delete user.password; //removing password property
+                res.status(201).json({token, user})
             } else {
                 res.status(401).json({message:"Password does not match!"});
             }
@@ -60,13 +62,17 @@ exports.verifyToken = (req,res,next)=>{
         jwt.verify(token,process.env.JWT_SECRET,(err,result)=>{
             if(!err) {
                 req.user = result;
-                // res.status(200).json(result)
                 next();
             } else {
-                res.status(401).json({message:"Unauthorised user lll"}); 
+                res.status(401).json({message:"Unauthorised user"}); 
             }
         }) 
     } else {
-        res.status(401).json({message:"Authorization Token Not Found"}); 
+        res.status(403).json({message:"Authorization Token Not Found"}); 
     }
+}
+
+exports.verifyUser = async (req,res) => {
+    const user = await User.findOne({email:req.user.email},{email:1,name:1,role:1,_id:1}).lean();
+    res.status(200).json(user);
 }

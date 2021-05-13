@@ -11,4 +11,7 @@ router.route('/signin')
     .get()
     .post(Auth.signIn)
 
+router.route('/validate')
+    .get(Auth.verifyToken, Auth.verifyUser)
+
 module.exports = router;

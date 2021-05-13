@@ -2,8 +2,8 @@ const TaskBoard = require('../model/taskBoard')
 const Task = require('../model/task')
 const _ = require('lodash')
 
-exports.getTaskboard = async (req, res) => {
-    let taskBoardList = await TaskBoard.find()
+exports.getTaskboards = async (req, res) => {
+    let taskBoardList = await TaskBoard.find({author:req.user.email})
     res.status(201).json(taskBoardList);
 }
 
