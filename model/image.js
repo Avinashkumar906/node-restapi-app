@@ -8,7 +8,7 @@ const imageSchema = new Schema({
 	place:{type:String},
 	group:{type:String, required: true},
 	author:{type:String, required: true},
-    description:{type:String, required: true},
+  description:{type:String, required: true},
 	visible: { type: Boolean,default : true },
 	approved: { type: Boolean,default : false },
 	private:{ type: Boolean,default : false },

@@ -17,6 +17,6 @@ router.route('/task')
     .delete(fortyAppController.getTaskboards)
 
 router.route('/taskboard') 
-    .get(fortyAppController.getTaskboardById)   
+    .post(authController.verifyToken, fortyAppController.postTaskboard)   
 
 module.exports = router;

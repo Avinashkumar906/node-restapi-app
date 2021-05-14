@@ -6,7 +6,7 @@ const log = require('log-to-file')
 exports.signIn = async (req,res,next)=>{
     try {
         const email = req.body.email.toLowerCase()
-        const user = await User.findOne({email:email}).lean();
+        const user = await User.findOne({email:email},{images:0,taskBoards:0}).lean();
         //checking existance of user
         if(user){
             let result = await  bcrypt.compare(req.body.password,user.password)

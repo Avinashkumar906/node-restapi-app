@@ -10,7 +10,7 @@ app.use(require('cors')())
 app.use(require('body-parser').json());
 app.use(require('helmet')());
 app.use(require('compression')());
-app.use(require('morgan')("combined"))
+// app.use(require('morgan')("combined"))
 
 //file handler using express
 app.use(fileUploader({

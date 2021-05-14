@@ -21,6 +21,7 @@ const profileSchema = new Schema({
     blocked:{type:Boolean,default:false},
     verified:{type:Boolean,default:false},
     images:[{type:Schema.Types.ObjectId,ref:'image'}],
+    taskBoards:[{type:Schema.Types.ObjectId,ref:'taskBoard'}],
     about:{type:Schema.Types.ObjectId,ref:'about'},
     resume:{type:Schema.Types.ObjectId,ref:'resume'},
     project:{type:Schema.Types.ObjectId,ref:'project'},

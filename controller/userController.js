@@ -110,7 +110,7 @@ module.exports = {
             const email = process.env.DEFAULT_EMAIL;
             let profile = await Profile.findOne(
                 { email: email},
-                {password:0,images:0})
+                {password:0,images:0,taskBoards:0})
             .populate(['about','resume','project','contact']).exec();
             res.status(201).json(profile)
         } catch (error) {

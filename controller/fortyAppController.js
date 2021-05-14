@@ -1,9 +1,10 @@
 const TaskBoard = require('../model/taskBoard')
 const Task = require('../model/task')
 const _ = require('lodash')
+const Profile = require('../model/profile')
 
 exports.getTaskboards = async (req, res) => {
-    let taskBoardList = await TaskBoard.find({author:req.user.email})
+    let taskBoardList = await TaskBoard.find({profile:req.user.id})
     res.status(201).json(taskBoardList);
 }
 
@@ -33,14 +34,20 @@ exports.postTask = async (req, res) => {
 }
 
 exports.postTaskboard = async (req, res) => {
-    let taskBoard = new TaskBoard(
-        {title:"Restricted Note",description:"descriptin of article!",imgSrc:""}
-    )
-    taskBoard.save()
+    let board = req.body;
+    let profile = await Profile.findById(req.user.id)
+    board.profile = req.user.id;
+    board = await new TaskBoard(board)
+    .save()
     .then(
-        (data)=>res.status(201).json(data)
+        data=>{
+            profile.taskBoards.push(data);
+            profile.save();
+            return data;
+        }
     )
-    .catch(
-        (err)=>res.status(500).json(err)
+    .then(
+        data=>res.status(201).json(data)
     )
+    .catch((err)=>res.status(500).json(err))
 }
