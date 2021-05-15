@@ -18,5 +18,7 @@ router.route('/task')
 
 router.route('/taskboard') 
     .post(authController.verifyToken, fortyAppController.postTaskboard)   
+    .patch(authController.verifyToken, fortyAppController.patchTaskboard)
+    .delete(authController.verifyToken, fortyAppController.deleteTaskboard)
 
 module.exports = router;
