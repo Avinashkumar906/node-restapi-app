@@ -8,6 +8,11 @@ exports.getTaskboards = async (req, res) => {
     res.status(201).json(taskBoardList);
 }
 
+exports.getTasks = async (req, res) => {
+    let TaskList = await Task.find({profile:req.user.id})
+    res.status(201).json(TaskList);
+}
+
 exports.getTaskboardById = async (req, res) => {
     const { id } = req.query;
     let taskBoardList = await TaskBoard.findById(id).populate('tasks');
@@ -16,17 +21,14 @@ exports.getTaskboardById = async (req, res) => {
 
 exports.postTask = async (req, res) => {
     try {
-        const { id } = req.query;
-        let taskBoard = await TaskBoard.findById(id);
-        // 
-        let task = new Task(req.body)
-        task.taskBoard = taskBoard;
-        task = await task.save();
-    
-        taskBoard.tasks.push(task);
-        taskBoard.save();
-
-        res.status(201).json(task);    
+        let task = req.body;
+        let profile = await Profile.findById(req.user.id)
+        task.profile = req.user.id;
+        task.author = req.user.email;
+        task = await new Task(task).save()
+        profile.tasks.push(task);
+        profile.save();
+        res.status(201).json(task) 
     } catch (error) {
         console.log(error)
         res.status(500).json(error);    
@@ -34,23 +36,19 @@ exports.postTask = async (req, res) => {
 }
 
 exports.postTaskboard = async (req, res) => {
-    let board = req.body;
-    let profile = await Profile.findById(req.user.id)
-    board.profile = req.user.id;
-	board.author = req.user.email;
-    board = await new TaskBoard(board)
-    .save()
-    .then(
-        data=>{
-            profile.taskBoards.push(data);
-            profile.save();
-            return data;
-        }
-    )
-    .then(
-        data=>res.status(201).json(data)
-    )
-    .catch((err)=>res.status(500).json(err))
+    try {
+        let board = req.body;
+        let profile = await Profile.findById(req.user.id)
+        board.profile = req.user.id;
+        board.author = req.user.email;
+        board = await new TaskBoard(board).save()
+        profile.taskBoards.push(board);
+        profile.save();
+        res.status(201).json(board)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error);  
+    }
 }
 
 exports.patchTaskboard = async (req, res) => {
@@ -60,6 +58,19 @@ exports.patchTaskboard = async (req, res) => {
         if(board.profile == req.user.id){
             await board.replaceOne(updatedBoard)
             res.status(201).json(updatedBoard)
+        };
+    } catch (error) {
+        res.status(500).json(error)   
+    }
+}
+
+exports.patchTask = async (req, res) => {
+    try {        
+        let updatedTask = req.body;
+        let task = await Task.findById(updatedTask._id);
+        if(task.profile == req.user.id){
+            await task.replaceOne(updatedTask)
+            res.status(201).json(updatedTask)
         };
     } catch (error) {
         res.status(500).json(error)   
@@ -76,6 +87,24 @@ exports.deleteTaskboard = async (req, res) => {
             profile.save()
             board.deleteOne()
             res.status(201).json(board)
+        }else{
+            res.status(403).json({message:"Unauthorised!"})    
+        };
+    } catch (error) {
+        res.status(500).json(error)   
+    }
+}
+
+exports.deleteTask = async (req, res) => {
+    try {        
+        const { taskId } = req.query;
+        let profile = await Profile.findById(req.user.id);
+        let task = await Task.findById(taskId);
+        if(task.profile == req.user.id){
+            profile.tasks.splice(profile.tasks.indexOf(taskId),1)
+            profile.save()
+            task.deleteOne()
+            res.status(201).json(task)
         }else{
             res.status(403).json({message:"Unauthorised!"})    
         };

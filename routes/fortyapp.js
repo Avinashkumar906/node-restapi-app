@@ -6,15 +6,14 @@ const router = express();
 
 router.route('/tasksboard')
     .get(authController.verifyToken, fortyAppController.getTaskboards)
-    .post(fortyAppController.getTaskboards)
-    .patch(fortyAppController.getTaskboards)
-    .delete(fortyAppController.getTaskboards)
+
+router.route('/tasks')
+    .get(authController.verifyToken, fortyAppController.getTasks)
 
 router.route('/task')
-    .get()
-    .post(fortyAppController.postTask)
-    .patch(fortyAppController.getTaskboards)
-    .delete(fortyAppController.getTaskboards)
+    .post(authController.verifyToken, fortyAppController.postTask)
+    .patch(authController.verifyToken, fortyAppController.patchTask)
+    .delete(authController.verifyToken, fortyAppController.deleteTask)
 
 router.route('/taskboard') 
     .post(authController.verifyToken, fortyAppController.postTaskboard)   
