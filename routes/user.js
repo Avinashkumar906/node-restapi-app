@@ -1,5 +1,6 @@
 const express = require('express')
 const Auth = require('../controller/authContoller')
+const mailController = require('../controller/mailController')
 
 const router = express();
 
@@ -13,5 +14,11 @@ router.route('/signin')
 
 router.route('/validate')
     .get(Auth.verifyToken, Auth.verifyUser)
+
+router.route('/resettoken')
+    .post(Auth.resetToken, mailController.postMail)
+
+router.route('/reset')
+    .post(Auth.resetPassword)
 
 module.exports = router;
