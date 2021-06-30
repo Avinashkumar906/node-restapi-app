@@ -11,6 +11,7 @@ router.route('/tasks')
     .get(authController.verifyToken, fortyAppController.getTasks)
 
 router.route('/task')
+    .get(authController.verifyToken, fortyAppController.getTaskById)
     .post(authController.verifyToken, fortyAppController.postTask)
     .patch(authController.verifyToken, fortyAppController.patchTask)
     .delete(authController.verifyToken, fortyAppController.deleteTask)

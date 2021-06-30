@@ -112,3 +112,17 @@ exports.deleteTask = async (req, res) => {
         res.status(500).json(error)   
     }
 }
+
+exports.getTaskById = async (req, res) => {
+    try {        
+        const { taskId } = req.query;
+        let task = await Task.findById(taskId);
+        if(task.profile == req.user.id){
+            res.status(201).json(task)
+        }else{
+            res.status(403).json({message:"Unauthorised!"})    
+        };
+    } catch (error) {
+        res.status(500).json(error)   
+    }
+}
