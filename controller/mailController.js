@@ -21,7 +21,7 @@ exports.postMails = (req, res) => {
         mg.messages().send(data[i], (error, body) => error ? result.push(error) : result.push(body));
     else
       throw new Error('No list found!')
-    res.status(200).json(user);
+    res.status(200).json(result);
   } catch(err){
     res.status(500).json(err);
   }
