@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const app = require('./app')
 
 //Mongo setup
-mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true,useUnifiedTopology: true},(err)=>{
+mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true,useUnifiedTopology: true,dbName:'asquareapi'},(err)=>{
     err ? log(`Mongodb error ${err}<br/>`) : log(`Mongodb Up! <br/>`);
 });
 

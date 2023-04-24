@@ -10,3 +10,4 @@ tmp/
 .env
 node_modules
 default.log
+package-lock.json
