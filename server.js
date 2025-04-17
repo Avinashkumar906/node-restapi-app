@@ -11,9 +11,9 @@ const app = require('./app')
 
 //Mongo setup
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true,useUnifiedTopology: true,dbName:'asquareapi'},(err)=>{
-    err ? log(`Mongodb error ${err}<br/>`) : log(`Mongodb Up! <br/>`);
+    err && log(`Mongodb error ${err}<br/>`);
 });
 
 
 //Starting server on specified port
-app.listen(process.env.PORT || 8080,()=>console.log(`Server running at port ${process.env.PORT}<br/>`));
+app.listen(process.env.PORT || 8080, () => console.log(`Server running at port ${process.env.PORT}<br/>`));

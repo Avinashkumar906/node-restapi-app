@@ -1,6 +1,8 @@
 const app = require('express')();
 const fileUploader = require('express-fileupload');
 const path = require('path')
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger/swaggerOptions');
 
 // Static folder
 app.use('/public',require('express').static(path.join(__dirname,'public')))
@@ -16,6 +18,9 @@ app.use(require('compression')());
 app.use(fileUploader({
     useTempFiles : true,
 }));
+
+// Swagger UI route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //routes
 app.use(require('./routes/mail'));

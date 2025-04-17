@@ -1,10 +1,11 @@
 const mailgun = require("mailgun-js");
 const mg = mailgun({apiKey: process.env.MAILGUN_KEY, domain: process.env.MAILGUN_DOMAIN});
+const log = require('log-to-file')
 
 exports.postMail = (req, res, next) => {
     const data = req.body;
     mg.messages().send(data, (error, body)=> {
-        error ? res.status(500).json(error) : res.status(201).json(body)
+      error ? res.status(500).json({message:'Mailer service inactive, not being maintained',error:error}) : res.status(201).json(body)
     });
 }
 

@@ -14,7 +14,7 @@ exports.signIn = async (req,res,next)=>{
             if(result){
                 log(`User Logged in : ${user.email}<br/>`)
                 let token = jwt.sign({role:user.role,email:user.email,id:user._id},process.env.JWT_SECRET);
-                delete user.password; //removing password property
+                delete user.password; 
                 res.status(201).json({token, user})
             } else {
                 res.status(401).json({message:"Password does not match!"});
@@ -30,22 +30,24 @@ exports.signIn = async (req,res,next)=>{
 exports.signUp = async (req, res, next) => {
     try {
         const email = req.body.email.toLowerCase()
-        let userfound = await User.findOne({ email: email})
+        let userfound = (await User.findOne({ email: email}))
         if(userfound) 
             res.status(400).json({message:'user with email already exist!'})
         else{
-            bcrypt.hash(req.body.password,10,(err,result)=>{
+            bcrypt.hash(req.body.password,10,async (err,result)=>{
                 if(!err){
                     let user = new User({
                         name:req.body.name,
                         email:req.body.email,
                         password:result
                     })
-                    user.save().then(
-                        (response)=>res.status(201).json(response)
-                    ).catch(
-                        err=>res.status(400).json({message:'Bad request!',err})
-                    );
+                    user = (await user.save()).lean()
+                    delete user.password;
+                    if(user){
+                        res.status(201).json(user)
+                    } else {
+                        res.status(400).json({message:'Bad request!'})
+                    }
                 } else {
                     res.status(400).json({message:'Bad request!'});
                 }
@@ -73,20 +75,20 @@ exports.verifyToken = (req,res,next)=>{
 }
 
 exports.verifyUser = async (req,res) => {
-    const user = await User.findOne({email:req.user.email},{email:1,name:1,role:1,_id:1}).lean();
+    const user = await User.findOne({email:req.user.email},{email:1,name:1,role:1,_id:1}) ;
     res.status(200).json(user);
 }
 
 exports.resetToken = async (req,res,next) => {
     const user = await User.findOne({email:req.body.email});
     if(user) {
-        const token = getRandomString(8);
+        const token = getRandomString(16);
         user.resettoken = token;
-        user.save();
+        await user.save();
         req.body = {
-            from: req.body.from,
+            from: req.body.from || 'noreply@nodejsapitest.com',
             html: `<div>Hi ${user.name},<br/>Your password reset token is <strong>${token}</strong><br/>Regards,<br/>Avinash Aggarwal<br/>Developer@fortyapp</div>`,
-            subject: req.body.subject,
+            subject: req.body.subject || 'Reset Password Token',
             to: `${user.email}`,
         };
         next()
@@ -111,6 +113,7 @@ exports.resetPassword = async (req,res,next) => {
         
         const user = await User.findOne({ email: email.toLowerCase()})
 
+        log(user.resettoken)
         if(!user) 
             res.status(400).json({message:'User not found with given email!'})
         else if(user.resettoken && user.resettoken === token){
