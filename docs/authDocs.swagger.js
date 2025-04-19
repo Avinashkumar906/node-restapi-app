@@ -4,13 +4,6 @@
 
 /**
  * @swagger
- * tags:
- *   name: Auth
- *   description: Authentication routes
- */
-
-/**
- * @swagger
  * components:
  *   securitySchemes:
  *     bearerAuth:
@@ -19,6 +12,12 @@
  *       bearerFormat: JWT
  */
 
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Authentication routes
+ */
 
 /**
  * @swagger
@@ -94,6 +93,7 @@
  *     summary: Validate a token and return user info
  *     tags: [Auth]
  *     security:
+ *       - {}
  *       - bearerAuth: []
  *     responses:
  *       200:

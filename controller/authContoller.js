@@ -57,6 +57,23 @@ exports.signUp = async (req, res, next) => {
         res.status(500).json({message:"Server down!",error})
     }
 }
+
+exports.appentToken = (req,res,next) => {
+    if(req.headers.authorization){
+        let token =  req.headers.authorization.split(' ')[1] 
+        jwt.verify(token,process.env.JWT_SECRET,(err,result)=>{
+            if(!err) {
+                req.user = result;
+                next();
+            } else {
+                res.status(401).json({message:"Invalid token."}); 
+            }
+        }) 
+    } else {
+        next() //proceed without bearer token
+    }
+}
+
 exports.verifyToken = (req,res,next)=>{
     let token;
     if(req.headers.authorization){
@@ -66,7 +83,7 @@ exports.verifyToken = (req,res,next)=>{
                 req.user = result;
                 next();
             } else {
-                res.status(401).json({message:"Unauthorised user"}); 
+                res.status(401).json({message:"Invalid token."}); 
             }
         }) 
     } else {

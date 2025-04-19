@@ -1,5 +1,5 @@
 const log = require('log-to-file')
-log(`Server is starting`);
+log(`Log dated ${new Date().toISOString()} <br/>`);
 
 //Setting enviroment variables for app to run localhost
 if(!process.env.PORT){
