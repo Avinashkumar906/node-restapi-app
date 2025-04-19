@@ -62,6 +62,10 @@
  *                 type: string
  *                 default: This user prefers to remain mysterious.
  *                 example: Passionate about learning new skills.
+ *               image:
+ *                 type: string
+ *                 default: https://images.pexels.com/photos/218863/pexels-photo-218863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
+ *                 example: This is the image to be displayed in background
  *     responses:
  *       201:
  *         description: Name and bio updated
