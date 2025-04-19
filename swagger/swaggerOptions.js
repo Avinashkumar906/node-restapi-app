@@ -14,7 +14,7 @@ const options = {
       },
     ]
   },
-  apis: ['./routes/*.js','./docs/*.js'], // you can expand this to other folders too
+  apis: ['./docs/*.js'], // you can expand this to other folders too
 };
 
 const swaggerSpec = swaggerJsdoc(options);

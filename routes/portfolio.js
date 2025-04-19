@@ -5,10 +5,10 @@ const User = require('../controller/userController')
 const router = express();
 
 router.route('/userdata')
-    .get(User.getUserData)
+    .get(Auth.appentToken, User.getUserData)
 
 router.route('/portfolio')
-    .get(User.getPortfolioUser)
+    .get(Auth.appentToken, User.getPortfolioUser)
 
 router.route('/nameandbio')
     .get()
