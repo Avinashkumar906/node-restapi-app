@@ -10,7 +10,7 @@ module.exports = {
     // Depricated function
     getUserData:async (req, res, next) => {
         try {
-            const email = process.env.DEFAULT_EMAIL;
+            const email = req.query.email || process.env.DEFAULT_EMAIL;
             const result = await User.findOne({ email: email},{password:0,images:0, taskBoards:0, tasks:0, resettoken:0 });
             res.status(201).json(result)
         } catch (error) {
@@ -197,7 +197,7 @@ module.exports = {
     // Api for v2 
     getPortfolioUser: async (req, res, next) => {
         try {
-            const email = req?.user?.email || process.env.DEFAULT_EMAIL;
+            const email = req.query.email || process.env.DEFAULT_EMAIL;
     
             const profile = await Profile.findOne(
                 { email },
