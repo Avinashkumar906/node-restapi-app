@@ -24,15 +24,22 @@
 
 /**
  * @swagger
+ * /portfolio/{email}:/**
+ * @swagger
  * /portfolio:
  *   get:
  *     summary: Get user's portfolio
  *     tags: [Users]
  *     description: |
- *       - With token: returns logged-in user's portfolio.  
- *       - Without token: returns default portfolio data.
- *     security:
- *       - bearerAuth: []
+ *       - If "email" query param is provided, returns that user's portfolio.  
+ *       - If not provided, returns default portfolio data.
+ *     parameters:
+ *       - in: query
+ *         name: email
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: Email of the user (optional)
  *     responses:
  *       200:
  *         description: Portfolio retrieved
@@ -62,6 +69,10 @@
  *                 type: string
  *                 default: This user prefers to remain mysterious.
  *                 example: Passionate about learning new skills.
+ *               image:
+ *                 type: string
+ *                 default: This is the image to be displayed in background
+ *                 example: https://images.pexels.com/photos/218863/pexels-photo-218863.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1
  *     responses:
  *       201:
  *         description: Name and bio updated
