@@ -27,36 +27,36 @@ exports.signIn = async (req,res,next)=>{
         res.status(404).json({message:error.message});
     }
 }
+const bcrypt = require('bcrypt');
+
 exports.signUp = async (req, res, next) => {
     try {
-        const email = req.body.email.toLowerCase()
-        let userfound = (await User.findOne({ email: email}))
-        if(userfound) 
-            res.status(400).json({message:'user with email already exist!'})
-        else{
-            bcrypt.hash(req.body.password,10,async (err,result)=>{
-                if(!err){
-                    let user = new User({
-                        name:req.body.name,
-                        email:req.body.email,
-                        password:result
-                    })
-                    user = (await user.save()).lean()
-                    delete user.password;
-                    if(user){
-                        res.status(201).json(user)
-                    } else {
-                        res.status(400).json({message:'Bad request!'})
-                    }
-                } else {
-                    res.status(400).json({message:'Bad request!'});
-                }
-            })
+        const email = req.body.email.toLowerCase();
+        let userFound = await User.findOne({ email });
+
+        if (userFound) {
+            return res.status(400).json({ message: 'User with email already exists!' });
         }
+
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        let user = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        });
+
+        user = await user.save();
+        user = user.toObject(); // convert Mongoose doc to plain JS object
+        delete user.password;
+
+        return res.status(201).json(user);
+
     } catch (error) {
-        res.status(500).json({message:"Server down!",error})
+        console.error('Signup Error:', error);
+        return res.status(500).json({ message: "Server error!", error });
     }
-}
+};
 
 exports.appentToken = (req,res,next) => {
     if(req.headers.authorization){
