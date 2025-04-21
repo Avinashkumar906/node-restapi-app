@@ -27,7 +27,6 @@ exports.signIn = async (req,res,next)=>{
         res.status(404).json({message:error.message});
     }
 }
-const bcrypt = require('bcrypt');
 
 exports.signUp = async (req, res, next) => {
     try {
